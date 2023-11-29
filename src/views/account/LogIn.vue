@@ -30,9 +30,12 @@ export default {
   methods: {
     async submitForm() {
       try {
-        const response = await accountApiService.login(this.form);
-        console.log(response);
-        // Handle success (e.g., redirect, show success message)
+        const { isSuccessful, errorMessage } = await accountApiService.login(this.form);
+        if (isSuccessful) {
+          this.$router.push({ name: 'landing-page' })
+        } else {
+          console.error(errorMessage)
+        }
       } catch (error) {
         console.error(error);
         // Handle error (e.g., show error message)
